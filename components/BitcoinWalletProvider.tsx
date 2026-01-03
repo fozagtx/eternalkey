@@ -48,7 +48,7 @@ declare global {
 export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [detectedWallet, setDetectedWallet] = useState<'unisat' | 'xverse' | 'okx' | null>(null);
-  const [wallet, setWallet] = useState({
+  const [wallet, setWallet] = useState<BitcoinWalletContextType['wallet']>({
     isConnected: false,
     address: '',
     network: 'testnet',

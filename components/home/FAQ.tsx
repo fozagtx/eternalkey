@@ -10,7 +10,7 @@ export const FAQ = () => {
             How does Eternal Key work?
           </AccordionTrigger>
           <AccordionContent className="text-zinc-400 pb-4">
-            Eternal Key uses smart contracts on the Solana blockchain to create a secure, automated inheritance system. 
+            Eternal Key uses smart contracts on the Bitcoin blockchain to create a secure, automated inheritance system. 
             You first set up an escrow which stores your assets, and specify the transfer amount along with a time period.
           </AccordionContent>
         </AccordionItem>
@@ -30,7 +30,7 @@ export const FAQ = () => {
             Is this secure?
           </AccordionTrigger>
           <AccordionContent className="text-zinc-400 pb-4">
-            Yes, alot. Eternal Key is built on Solana&apos;s blockchain, ensuring maximum security and transparency. 
+            Yes, alot. Eternal Key is built on Bitcoin&apos;s blockchain, ensuring maximum security and transparency. 
             All transactions and rules are enforced by smart contracts, making the process completely trustless and automated.
           </AccordionContent>
         </AccordionItem>

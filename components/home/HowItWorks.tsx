@@ -39,7 +39,7 @@ export const HowItWorks = () => {
         <div className="text-neutral-200 mt-4 relative z-20">
           Follow these steps to set up your inheritance:
           <ul className="list-none mt-4 space-y-3">
-            <Step title="Connect your Solana wallet" />
+            <Step title="Connect your Bitcoin wallet" />
             <Step title="Enter your beneficiary's wallet address" />
             <Step title="Enter amount to pass" />
             <Step title="Configure check-in period" />

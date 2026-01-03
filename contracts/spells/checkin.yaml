@@ -1,0 +1,33 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+
+private_inputs:
+  $00: "Checkin"
+
+ins:
+  - utxo_id: ${vault_utxo}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries: ${beneficiaries}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${old_checkin}
+        vault_balance: ${vault_balance}
+        status: Active
+        vault_id: ${vault_id}
+        created_at: ${created_at}
+
+outs:
+  - address: ${addr_0}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries: ${beneficiaries}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${current_block}
+        vault_balance: ${vault_balance}
+        status: Active
+        vault_id: ${vault_id}
+        created_at: ${created_at}

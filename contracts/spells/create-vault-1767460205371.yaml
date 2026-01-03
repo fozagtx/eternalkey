@@ -1,0 +1,32 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+
+private_inputs:
+  $00: "CreateInheritanceVault"
+  $01: "b48240102bfa3e064ca80205bf7d8615364f877c94c9eea94098d1dfcfebb2a2"
+
+outs:
+  - address: tb1qb55df1e19a57fa98938f2e776abd07ed
+    charms:
+      $00:
+        vault_id: "test_vault_1767460205339"
+        owner: "tb1qb55df1e19a57fa98938f2e776abd07ed"
+        beneficiaries: [
+          {
+            "address": "tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3qccfmv3",
+            "percentage": 60,
+            "name": "Primary Beneficiary"
+          },
+          {
+            "address": "tb1qqqqqq0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3qfpyssf",
+            "percentage": 40,
+            "name": "Secondary Beneficiary"
+          }
+        ]
+        timeout_blocks: 144
+        last_checkin: 1767460205
+        vault_balance: 0
+        status: "Active"
+        created_at: 1767460205339

@@ -1,0 +1,17 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+
+outs:
+  - address: tb1q96z85hhlrhcz8rpe5zmwg8am4h7mkrznl34aa8
+    charms:
+      $00:
+        owner: tb1q96z85hhlrhcz8rpe5zmwg8am4h7mkrznl34aa8
+        beneficiaries: [{"address":"tb1qrp33g0q5c5txsp9arysrx4k6zdkfs4nce4xj0gdcccefvpysxf3qccfmv3","percentage":100,"name":"Test Beneficiary"}]
+        timeout_blocks: 144
+        last_checkin: 2905552
+        vault_balance: 0
+        status: Active
+        vault_id: vault-tb1q96z85hhlrhcz8rpe5zmwg8am4h7mkrznl34aa8
+        created_at: 1767459200000

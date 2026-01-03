@@ -1,0 +1,30 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+
+private_inputs:
+  $00: "${in_utxo_0}"
+
+ins:
+  - utxo_id: ${in_utxo_0}
+    charms: {}
+
+outs:
+  - address: ${addr_0}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries:
+          - address: ${beneficiary_1_address}
+            percentage: ${beneficiary_1_percentage}
+            name: ${beneficiary_1_name}
+          - address: ${beneficiary_2_address}
+            percentage: ${beneficiary_2_percentage}
+            name: ${beneficiary_2_name}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${current_block}
+        vault_balance: 0
+        status: Active
+        vault_id: ${vault_id}
+        created_at: ${timestamp}

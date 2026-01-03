@@ -1,0 +1,38 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+  $01: t/${app_id}/${app_vk}
+
+private_inputs:
+  $00: "Claim"
+
+ins:
+  - utxo_id: ${vault_utxo}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries: ${beneficiaries}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${last_checkin}
+        vault_balance: ${vault_balance}
+        status: Active
+        vault_id: ${vault_id}
+        created_at: ${created_at}
+      $01: ${vault_balance}
+
+outs:
+  - address: ${beneficiary_address}
+    charms:
+      $01: ${claim_amount}
+  - address: ${addr_0}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries: ${beneficiaries}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${last_checkin}
+        vault_balance: 0
+        status: Claimed
+        vault_id: ${vault_id}
+        created_at: ${created_at}

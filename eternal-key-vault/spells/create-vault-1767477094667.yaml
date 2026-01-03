@@ -1,0 +1,24 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+
+private_inputs:
+  $00: "${in_utxo_0}"
+
+ins:
+  - utxo_id: ${in_utxo_0}
+    charms: {}
+
+outs:
+  - address: ${addr_0}
+    charms:
+      $00:
+        owner: tb1q96z85hhlrhcz8rpe5zmwg8am4h7mkrznl34aa8
+        beneficiaries: [{"address":"bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4","percentage":100,"name":"Test Beneficiary"}]
+        timeout_blocks: 20
+        last_checkin: 2905552
+        vault_balance: 0
+        status: Active
+        vault_id: 0000000024a477c5
+        created_at: 1767477094639

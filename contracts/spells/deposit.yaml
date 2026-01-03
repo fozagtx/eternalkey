@@ -1,0 +1,37 @@
+version: 8
+
+apps:
+  $00: n/${app_id}/${app_vk}
+  $01: t/${app_id}/${app_vk}
+
+private_inputs:
+  $00: "${operation}"
+
+ins:
+  - utxo_id: ${vault_utxo}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries: ${beneficiaries}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${last_checkin}
+        vault_balance: ${current_balance}
+        status: Active
+        vault_id: ${vault_id}
+        created_at: ${created_at}
+  - utxo_id: ${deposit_utxo}
+    value: ${deposit_amount}
+
+outs:
+  - address: ${addr_0}
+    charms:
+      $00:
+        owner: ${owner_address}
+        beneficiaries: ${beneficiaries}
+        timeout_blocks: ${timeout_blocks}
+        last_checkin: ${last_checkin}
+        vault_balance: ${new_balance}
+        status: Active
+        vault_id: ${vault_id}
+        created_at: ${created_at}
+      $01: ${deposit_amount}

@@ -1,0 +1,29 @@
+version: 8
+
+# EternalKey Inheritance Vault Contract
+apps:
+  $00: n/${app_id}/${app_vk}
+
+# Deployment private inputs
+private_inputs:
+  $00: "ContractDeployment"
+  $01: "b48240102bfa3e064ca80205bf7d8615364f877c94c9eea94098d1dfcfebb2a2"
+
+# Contract deployment output
+outs:
+  - address: tb1qb55df1e19a57fa98938f2e776abd07ed
+    charms:
+      $00:
+        contract_type: "InheritanceVault"
+        version: "1.0.0"
+        owner: "tb1qb55df1e19a57fa98938f2e776abd07ed"
+        deployed_at: 1767460204732
+        network: "testnet"
+        status: "Active"
+        features: [
+          "multi_beneficiary",
+          "block_timeout",
+          "owner_checkin",
+          "automatic_distribution"
+        ]
+        contract_code_hash: "eternal_key_vault_1767460204732"

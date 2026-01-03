@@ -3,25 +3,15 @@ import {
   IconTarget,
   IconClock,
   IconWallet,
+  IconCurrencyBitcoin,
 } from "@tabler/icons-react";
-import Image from "next/image";
-
-const SolanaLogo = () => (
-  <Image
-    src="/solana-sol-logo.svg"
-    alt="Solana Logo"
-    width={32}
-    height={32}
-    className="text-blue-400"
-  />
-);
 
 export default function FeaturesSectionDemo() {
   const features = [
     {
       title: "Security First",
-      description: "Built on Solana, the most secure blockchain",
-      icon: <SolanaLogo />,
+      description: "Built on Bitcoin, the most secure blockchain",
+      icon: <IconCurrencyBitcoin className="w-8 h-8" />,
     },
     {
       title: "Full Control",

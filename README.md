@@ -99,7 +99,7 @@ This is better. It's automatic. It's trustless. It's just code.
 
 ## Links
 
-- Demo: http://localhost:3000/app
+- Demo: eternalkeybtc.vercel.app
 - Live contract: tb1qb55df1e19a57fa98938f2e776abd07ed
 - Charms Protocol: [GitHub](https://github.com/charmsprotocol)
 - Blockstream Explorer: [View testnet](https://blockstream.info/testnet)

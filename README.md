@@ -97,12 +97,28 @@ Until now, the only solution was to literally write down your seed phrase and ho
 
 This is better. It's automatic. It's trustless. It's just code.
 
-## Links
+## Development Progress
 
-- Demo: eternalkeybtc.vercel.app
-- Live contract: tb1qb55df1e19a57fa98938f2e776abd07ed
-- Charms Protocol: [GitHub](https://github.com/charmsprotocol)
-- Blockstream Explorer: [View testnet](https://blockstream.info/testnet)
+### Current Status
+Bitcoin inheritance vault on testnet using Charms Protocol. Core functionality working: vault creation, check-ins, automatic transfers.
+
+### What's Next
+**Security & Production Readiness**
+- Implement proper key management (replace plain text storage)
+- Add multi-signature support for family members
+- Security audit and rate limiting
+
+**UX/UI Improvements**
+- Better wallet connection and error handling
+- Mobile responsive design
+- Email/SMS notifications for check-in deadlines
+
+**Core Features**
+- Emergency recovery options
+- Partial withdrawals while keeping vault active
+- Vault templates for common inheritance scenarios
+
+*See [roadmap/next-steps.md](/roadmap/next-steps.md) for complete development roadmap.*
 
 ## License
 

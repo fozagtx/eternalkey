@@ -2,11 +2,11 @@
 
 import React, { FC } from 'react';
 import Particles from "@/components/ui/particles";
-import FeatureSection from "@/components/blocks/FeatureSection";
-import { Hero } from '@/components/home/Hero';
-import { HowItWorks } from '@/components/home/HowItWorks';
-import { FAQ } from '@/components/home/FAQ';
-import { useBitcoinWallet } from '@/components/BitcoinWalletProvider';
+import FeatureSection from "@/components/blocks/featureSection";
+import { Hero } from '@/components/home/hero';
+import { HowItWorks } from '@/components/home/howItWorks';
+import { FAQ } from '@/components/home/faq';
+import { useBitcoinWallet } from '@/components/bitcoinWalletProvider';
 import { useRouter } from 'next/navigation';
 
 const structuredData = {
@@ -68,7 +68,7 @@ const Homepage: FC = () => {
             {/* Trust Indicators */}
             <div className="pt-16 border-t border-zinc-900">
               <div className="flex flex-wrap justify-center text-zinc-500 text-sm">
-                <a href="https://twitter.com/amritwt" className="hover:underline">@amritwt</a>
+                <a href="https://twitter.com/zanbuilds" className="hover:underline">@zanbuilds</a>
               </div>
             </div>
           </div>

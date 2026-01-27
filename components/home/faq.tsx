@@ -40,7 +40,7 @@ export const FAQ = () => {
             How do I verify this so I can trust it?
           </AccordionTrigger>
           <AccordionContent className="text-zinc-400 pb-4">
-            You can verify the code and smart contract by checking the source code on <a href="https://github.com/amritwt/eternal-key" className="underline">Github</a>.
+            You can verify the code and smart contract by checking the source code on <a href="https://github.com/fozagtx/eternalkey" className="underline">Github</a>.
           </AccordionContent>
         </AccordionItem>
       </Accordion>

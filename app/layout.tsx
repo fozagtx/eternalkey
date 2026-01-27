@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
-import { BitcoinWalletProvider } from '@/components/BitcoinWalletProvider';
+import { BitcoinWalletProvider } from '@/components/bitcoinWalletProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://eternalkey.xyz"),
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Eternal Key - Programmable Bitcoin Inheritance with Charms Protocol",
     description: "Secure your Bitcoin assets' future with programmable inheritance using Charms Protocol.",
-    creator: "@amritwt",
+    creator: "@zanbuilds",
   },
   icons: {
     icon: [

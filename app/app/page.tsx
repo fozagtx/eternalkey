@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { BitcoinInheritanceVault } from '@/components/BitcoinInheritanceVault';
+import { BitcoinInheritanceVault } from '@/components/bitcoinInheritanceVault';
 
 const AppPage = () => {
   return (

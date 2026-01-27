@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
-import AnimatedShinyText from "@/components/ui/animated-shiny-text";
+import AnimatedShinyText from "@/components/ui/animatedShinyText";
 import { Button } from "@/components/ui/button";
-import { useBitcoinWallet } from '@/components/BitcoinWalletProvider';
+import { useBitcoinWallet } from '@/components/bitcoinWalletProvider';
 import { toast } from 'sonner';
 
 export const Hero = () => {

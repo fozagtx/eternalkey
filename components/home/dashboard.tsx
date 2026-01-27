@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 const BitcoinInheritanceVault = dynamic(
-  () => import('@/components/BitcoinInheritanceVault'),
+  () => import('@/components/bitcoinInheritanceVault'),
   { ssr: false }
 );
 

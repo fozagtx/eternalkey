@@ -3,7 +3,7 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { DatePickerDemo } from '@/components/custom-date-picker';
+import { DatePickerDemo } from '@/components/customDatePicker';
 import { differenceInMinutes } from 'date-fns';
 import { cn } from '@/lib/utils';
 import {
@@ -12,7 +12,7 @@ import {
   VaultStatus,
   Beneficiary
 } from '@/lib/charms-vault';
-import { useBitcoinWallet } from '@/components/BitcoinWalletProvider';
+import { useBitcoinWallet } from '@/components/bitcoinWalletProvider';
 
 interface ExtendDuration {
   days: number;

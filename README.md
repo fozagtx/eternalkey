@@ -1,4 +1,4 @@
-# Eternal Key
+# Heritaz (Previously Eternal Key)
 
 A Bitcoin inheritance vault that works automatically. Built with Charms Protocol.
 
@@ -10,7 +10,7 @@ That's the thing about Bitcoin. There's no customer service line. No estate lawy
 
 This happens all the time. Not just to legendary crypto creators, but to regular people. Your Bitcoin can outlive you, but your family can't touch it.
 
-Eternal Key fixes this.
+Heritaz fixes this.
 
 ## What It Does
 

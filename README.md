@@ -54,163 +54,73 @@ Get free testnet Bitcoin from:
 
 ## Architecture
 
-### System Overview
-
-Heritaz is built on a three-layer architecture that combines Bitcoin's security with smart contract programmability:
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      User Interface                         │
-│  Next.js + React + Tailwind CSS + Wallet Integration       │
-└─────────────────┬───────────────────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────────────────┐
-│                   API Layer (Next.js)                       │
-│  • Vault State Query    • Execute Operations                │
-│  • Vault Creation       • Owner Management                  │
-└─────────────────┬───────────────────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────────────────┐
-│             Smart Contract Layer (Rust)                     │
-│  Charms Protocol SDK on Bitcoin Testnet                    │
-│  Contract Address: tb1qb55df1e19a57fa98938f2e776abd07ed   │
-└─────────────────┬───────────────────────────────────────────┘
-                  │
-┌─────────────────▼───────────────────────────────────────────┐
-│                  Bitcoin Testnet                            │
-│  Immutable storage & validation of all vault operations    │
-└─────────────────────────────────────────────────────────────┘
+### System Flow
+```mermaid
+graph TD
+    A[User] -->|Connect Wallet| B[Frontend UI]
+    B -->|Create/Check-in/Claim| C[API Layer]
+    C -->|Execute| D[Smart Contract]
+    D -->|Store| E[Bitcoin Testnet]
+    E -->|Validate| D
 ```
 
-### Core Components
-
-#### 1. **Smart Contract (`contracts/src/lib.rs`)**
-The heart of Heritaz. Written in Rust using the Charms Protocol SDK.
-
-**Key Functions:**
-- **Vault Creation:** Validates beneficiaries, ensures percentages sum to 100%
-- **Check-in:** Resets the timeout timer, requires owner signature
-- **Claim:** Allows beneficiaries to claim funds after timeout expires
-- **Token Management:** Tracks vault balance via NFT and TOKEN charms
-
-**Validation Rules:**
-- Timeout must be between 1 day and 10 years (in blocks)
-- Beneficiary percentages must sum to exactly 100%
-- Only owner can check in or modify vault
-- Only beneficiaries can claim after timeout
-
-#### 2. **Frontend (`components/` + `app/`)**
-
-**Wallet Integration:**
-- Supports multiple Bitcoin wallets: Unisat, Leather, Xverse, OKX
-- Modal-based wallet selection with auto-detection
-- Testnet-first configuration
-
-**Core Components:**
-- `bitcoinInheritanceVault.tsx` - Main vault interface
-- `walletModal.tsx` - Multi-wallet connection modal
-- `bitcoinWalletProvider.tsx` - Wallet state management
-
-#### 3. **API Layer (`app/api/charms/`)**
-
-**Endpoints:**
-- `POST /api/charms/vault-state` - Query current vault state
-- `POST /api/charms/execute-spell` - Execute vault operations
-- `POST /api/charms/vaults-by-owner` - Get all vaults for an owner
-- `GET /api/bitcoin/block-height` - Get current Bitcoin block height
-
-### Data Flow
-
-#### Creating a Vault:
-```
-User → Wallet Modal → Select Beneficiaries → API Call → 
-Smart Contract Validation → Bitcoin Transaction → Vault Created
+### Vault Lifecycle
+```mermaid
+sequenceDiagram
+    participant Owner
+    participant Contract
+    participant Bitcoin
+    participant Beneficiary
+    
+    Owner->>Contract: Create Vault + Deposit BTC
+    Contract->>Bitcoin: Store Vault State
+    
+    loop Every N blocks
+        Owner->>Contract: Check-in
+        Contract->>Bitcoin: Reset Timer
+    end
+    
+    Note over Owner,Bitcoin: If Owner stops checking in...
+    
+    Beneficiary->>Contract: Claim (after timeout)
+    Contract->>Bitcoin: Verify Timeout Passed
+    Bitcoin->>Contract: Confirmed
+    Contract->>Beneficiary: Transfer Funds
 ```
 
-#### Check-in Process:
+### Tech Stack
 ```
-User → Connect Wallet → Click Check-in → Sign Transaction → 
-Smart Contract Updates last_checkin → Timer Resets
+Frontend:     React + Next.js + Tailwind + Radix UI
+   ↓
+API:          Next.js API Routes
+   ↓
+Contract:     Rust + Charms Protocol SDK
+   ↓
+Blockchain:   Bitcoin Testnet (tb1qb55df1e19a57fa98938f2e776abd07ed)
 ```
 
-#### Claiming Inheritance:
+### Vault Structure
 ```
-Beneficiary → Wait for Timeout → Connect Wallet → Claim → 
-Smart Contract Validates Timeout → Funds Distributed
-```
-
-### Smart Contract Data Structure
-
-```rust
-pub struct InheritanceVault {
-    pub owner: String,              // Bitcoin address of vault owner
-    pub beneficiaries: Vec<Beneficiary>,  // List of inheritors
-    pub timeout_blocks: u32,        // Blocks until vault unlocks
-    pub last_checkin: u32,          // Last check-in block height
-    pub vault_balance: u64,         // Balance in satoshis
-    pub status: VaultStatus,        // Active, Locked, Claiming, Claimed
-    pub vault_id: String,           // Unique vault identifier
-    pub created_at: u64,            // Creation timestamp
-}
-
-pub struct Beneficiary {
-    pub address: String,     // Bitcoin address
-    pub percentage: u8,      // Share (0-100)
-    pub name: String,        // Display name
+InheritanceVault {
+  owner: "tb1q..."           // Vault owner address
+  beneficiaries: [           // Who inherits
+    { address, percentage, name }
+  ]
+  timeout_blocks: 52560      // ~1 year
+  last_checkin: 850000       // Block height
+  vault_balance: 100000000   // 1 BTC in sats
+  status: Active             // Active/Claimed
 }
 ```
 
-### Security Model
-
-**On-Chain Validation:**
-- All vault operations are validated by the smart contract
-- Owner signatures required for check-ins and modifications
-- Beneficiary signatures required for claims
-- Timeout verification ensures funds can't be claimed early
-
-**Wallet Security:**
-- Private keys never leave the browser wallet extension
-- All transactions signed client-side
-- No server-side key storage
-
-**Testnet Safety:**
-- Currently runs only on Bitcoin testnet
-- No real funds at risk during testing phase
-
-### Technology Stack
-
-**Smart Contract Layer:**
-- **Language:** Rust
-- **Framework:** Charms Protocol SDK
-- **Blockchain:** Bitcoin Testnet
-- **Contract Type:** NFT + TOKEN charms
-
-**Backend:**
-- **Framework:** Next.js 16 (App Router)
-- **Runtime:** Node.js
-- **API:** RESTful endpoints
-
-**Frontend:**
-- **Framework:** React 18
-- **Styling:** Tailwind CSS
-- **UI Components:** Radix UI
-- **Wallet:** Unisat, Leather, Xverse, OKX support
-
-**Deployment:**
-- **Network:** Bitcoin Testnet
-- **Contract Address:** `tb1qb55df1e19a57fa98938f2e776abd07ed`
-- **Frontend:** Vercel-ready
-
-### Block Time & Timeouts
-
-Bitcoin produces blocks approximately every 10 minutes:
-- **1 day** = 144 blocks
-- **1 week** = 1,008 blocks
-- **1 month** = ~4,320 blocks
-- **6 months** = ~26,280 blocks
-- **1 year** = ~52,560 blocks
-
-Heritaz allows timeout periods from 144 blocks (1 day) to 5,256,000 blocks (~10 years).
+### Block Time Reference
+| Period | Blocks | Approx Time |
+|--------|--------|-------------|
+| 1 day | 144 | 24 hours |
+| 1 week | 1,008 | 7 days |
+| 1 month | 4,320 | 30 days |
+| 6 months | 26,280 | ~180 days |
+| 1 year | 52,560 | ~365 days |
 
 ---
 

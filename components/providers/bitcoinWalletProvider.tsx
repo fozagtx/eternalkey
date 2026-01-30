@@ -9,11 +9,12 @@ interface BitcoinWalletContextType {
     address: string;
     network: 'mainnet' | 'testnet';
     balance?: number;
+    walletType?: 'unisat' | 'leather' | 'xverse' | 'okx';
   };
   isLoading: boolean;
-  connectWallet: () => Promise<void>;
+  connectWallet: (walletType?: 'unisat' | 'leather' | 'xverse' | 'okx') => Promise<void>;
   disconnectWallet: () => void;
-  detectedWallet: 'unisat' | 'xverse' | 'okx' | null;
+  detectedWallet: 'unisat' | 'leather' | 'xverse' | 'okx' | null;
 }
 
 const BitcoinWalletContext = createContext<BitcoinWalletContextType | null>(null);
@@ -38,16 +39,24 @@ declare global {
     getBalance: () => Promise<{ total: number }>;
     getAccounts: () => Promise<string[]>;
   }
+  
+  interface LeatherProvider {
+    request: (method: string, params?: any) => Promise<any>;
+  }
+  
   interface Window {
     unisat?: UnisatApi;
     xverse?: Record<string, unknown>;
     okxwallet?: { bitcoin?: unknown };
+    LeatherProvider?: LeatherProvider;
+    HiroWalletProvider?: LeatherProvider;
+    btc?: LeatherProvider;
   }
 }
 
 export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [detectedWallet, setDetectedWallet] = useState<'unisat' | 'xverse' | 'okx' | null>(null);
+  const [detectedWallet, setDetectedWallet] = useState<'unisat' | 'leather' | 'xverse' | 'okx' | null>(null);
   const [wallet, setWallet] = useState<BitcoinWalletContextType['wallet']>({
     isConnected: false,
     address: '',
@@ -58,6 +67,7 @@ export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ ch
   const detectWallet = useCallback(() => {
     if (typeof window === 'undefined') return null; // SSR check
     if (window.unisat) return 'unisat';
+    if (window.LeatherProvider || window.HiroWalletProvider || window.btc) return 'leather';
     if (window.xverse) return 'xverse';
     if (window.okxwallet?.bitcoin) return 'okx';
     return null;
@@ -68,9 +78,8 @@ export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ ch
       setIsLoading(true);
 
       if (!window.unisat) {
-        toast.error('Unisat wallet not installed. Please install from unisat.io');
-        window.open('https://unisat.io', '_blank');
-        return;
+        toast.error('Unisat wallet not detected');
+        throw new Error('Unisat wallet not detected');
       }
 
       // Request access to the wallet
@@ -115,18 +124,71 @@ export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ ch
     }
   }, []);
 
+  const connectLeather = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      // Try to detect Leather wallet provider
+      const leatherProvider = window.LeatherProvider || window.HiroWalletProvider || window.btc;
+
+      if (!leatherProvider) {
+        toast.error('Leather wallet not detected');
+        throw new Error('Leather wallet not detected');
+      }
+
+      // Request accounts from Leather
+      const response = await leatherProvider.request('getAddresses', {});
+      
+      if (!response || !response.result || !response.result.addresses) {
+        toast.error('Failed to get addresses from Leather wallet');
+        return;
+      }
+
+      // Get Bitcoin testnet address (usually p2wpkh format)
+      const addresses = response.result.addresses;
+      const bitcoinAddress = addresses.find((addr: any) => 
+        addr.symbol === 'BTC' && addr.type === 'p2wpkh'
+      );
+
+      if (!bitcoinAddress) {
+        toast.error('No Bitcoin testnet address found in Leather wallet');
+        return;
+      }
+
+      const address = bitcoinAddress.address;
+
+      setWallet((prev) => ({
+        ...prev,
+        isConnected: true,
+        address: address,
+        network: 'testnet',
+        balance: 0, // Leather doesn't provide balance directly
+        walletType: 'leather'
+      }));
+
+      toast.success(`Connected to Leather wallet: ${address.slice(0, 6)}...${address.slice(-4)}`);
+
+    } catch (error: unknown) {
+      console.error('Leather connection error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to connect to Leather wallet';
+      toast.error(errorMessage);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   const connectXverse = useCallback(async () => {
     try {
       setIsLoading(true);
 
       if (!window.xverse) {
-        toast.error('Xverse wallet not installed. Please install from xverse.app');
-        window.open('https://www.xverse.app/', '_blank');
-        return;
+        toast.error('Xverse wallet not detected');
+        throw new Error('Xverse wallet not detected');
       }
 
       // Note: Xverse has a different API structure
-      toast.info('Xverse integration coming soon. Use Unisat for now.');
+      toast.info('Xverse integration coming soon. Use Unisat or Leather.');
 
     } catch (error: unknown) {
       console.error('Xverse connection error:', error);
@@ -136,7 +198,29 @@ export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ ch
     }
   }, []);
 
-  const connectWallet = useCallback(async () => {
+  const connectWallet = useCallback(async (walletType?: 'unisat' | 'leather' | 'xverse' | 'okx') => {
+    // If walletType is specified, connect to that specific wallet
+    if (walletType) {
+      setDetectedWallet(walletType);
+      
+      switch (walletType) {
+        case 'unisat':
+          await connectUnisat();
+          break;
+        case 'leather':
+          await connectLeather();
+          break;
+        case 'xverse':
+          await connectXverse();
+          break;
+        case 'okx':
+          toast.info('OKX wallet integration coming soon.');
+          break;
+      }
+      return;
+    }
+
+    // Otherwise, auto-detect and connect to available wallet
     const availableWallet = detectWallet();
 
     if (!availableWallet) {
@@ -151,13 +235,18 @@ export const BitcoinWalletProvider: React.FC<BitcoinWalletProviderProps> = ({ ch
       return;
     }
 
+    if (availableWallet === 'leather') {
+      await connectLeather();
+      return;
+    }
+
     if (availableWallet === 'xverse') {
       await connectXverse();
       return;
     }
 
     toast.info('OKX wallet integration coming soon.');
-  }, [connectUnisat, connectXverse, detectWallet]);
+  }, [connectUnisat, connectLeather, connectXverse, detectWallet]);
 
   const disconnectWallet = useCallback(() => {
     setWallet((prev) => ({

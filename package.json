@@ -1,8 +1,8 @@
 {
-  "name": "eternalkey-bitcoin",
+  "name": "heritaz",
   "version": "0.1.0",
   "private": true,
-  "description": "Bitcoin inheritance vault using Charms Protocol",
+  "description": "Secure Bitcoin inheritance for modern families using Charms Protocol",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -28,7 +28,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^12.23.26",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^0.563.0",
     "next": "16.1.1",
     "next-themes": "^0.4.6",
     "pino-pretty": "^13.1.3",

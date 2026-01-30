@@ -2,35 +2,31 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
-import { BitcoinWalletProvider } from '@/components/bitcoinWalletProvider';
+import { BitcoinWalletProvider } from '@/components/providers/bitcoinWalletProvider';
+import { ErrorBoundary } from '@/components/common/errorBoundary';
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://eternalkey.xyz"),
-  title: "Eternal Key - Programmable Bitcoin Inheritance with Charms Protocol",
-  description: "A programmable inheritance vault on Bitcoin using Charms Protocol. Secure your digital assets' future with automated, trustless transfers to designated beneficiaries.",
-  keywords: ["Bitcoin inheritance", "Charms Protocol", "dead man's switch", "digital assets", "Bitcoin vault", "crypto inheritance", "programmable Bitcoin"],
+  metadataBase: new URL("https://heritaz.xyz"),
+  title: "Heritaz - Secure Bitcoin Inheritance for Modern Families",
+  description: "Modern, trust-driven inheritance rails on Bitcoin. Automate check-ins, lock assets with confidence, and keep beneficiaries informed—powered by Charms Protocol.",
+  keywords: ["Bitcoin inheritance", "Heritaz", "Charms Protocol", "digital legacy", "Bitcoin vault", "crypto inheritance", "Bitcoin security"],
   openGraph: {
-    title: "Eternal Key - Programmable Bitcoin Inheritance with Charms Protocol",
-    description: "Secure your Bitcoin assets' future with programmable inheritance using Charms Protocol. Set up automated transfers for your digital assets.",
-    url: "https://eternalkey.xyz",
-    siteName: "Eternal Key",
+    title: "Heritaz - Secure Bitcoin Inheritance for Modern Families",
+    description: "Modern, trust-driven inheritance rails on Bitcoin. Automate check-ins, lock assets with confidence, and keep beneficiaries informed—powered by Charms Protocol.",
+    url: "https://heritaz.xyz",
+    siteName: "Heritaz",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eternal Key - Programmable Bitcoin Inheritance with Charms Protocol",
-    description: "Secure your Bitcoin assets' future with programmable inheritance using Charms Protocol.",
+    title: "Heritaz - Secure Bitcoin Inheritance for Modern Families",
+    description: "Modern, trust-driven inheritance rails on Bitcoin. Automate check-ins, lock assets with confidence, and keep beneficiaries informed—powered by Charms Protocol.",
     creator: "@zanbuilds",
   },
   icons: {
     icon: [
-      { url: 'favicon.ico', sizes: 'any' },
-      { url: 'android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: 'android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-    ],
-    apple: [
-      { url: 'apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: 'favicon.svg', type: 'image/svg+xml' },
     ],
   },
   robots: {
@@ -59,11 +55,13 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
-        <BitcoinWalletProvider>
-          <Analytics />
-          <Toaster />
-          {children}
-        </BitcoinWalletProvider>
+        <ErrorBoundary>
+          <BitcoinWalletProvider>
+            <Analytics />
+            <Toaster />
+            {children}
+          </BitcoinWalletProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

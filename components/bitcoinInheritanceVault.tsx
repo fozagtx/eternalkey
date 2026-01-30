@@ -12,7 +12,7 @@ import {
   VaultStatus,
   Beneficiary
 } from '@/lib/charms-vault';
-import { useBitcoinWallet } from '@/components/bitcoinWalletProvider';
+import { useBitcoinWallet } from '@/components/providers/bitcoinWalletProvider';
 
 interface ExtendDuration {
   days: number;

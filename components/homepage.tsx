@@ -1,18 +1,17 @@
 'use client';
 
 import React, { FC } from 'react';
-import Particles from "@/components/ui/particles";
-import FeatureSection from "@/components/blocks/featureSection";
-import { Hero } from '@/components/home/hero';
-import { HowItWorks } from '@/components/home/howItWorks';
-import { FAQ } from '@/components/home/faq';
-import { useBitcoinWallet } from '@/components/bitcoinWalletProvider';
+import { Header } from '@/components/layout/header';
+import { Hero } from '@/components/features/heroSection';
+import { HowItWorks } from '@/components/features/howItWorks';
+import { Features } from '@/components/features/features';
+import { useBitcoinWallet } from '@/components/providers/bitcoinWalletProvider';
 import { useRouter } from 'next/navigation';
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "EternalKey",
+  "name": "Heritaz",
   "applicationCategory": "DeFi",
   "operatingSystem": "Web",
   "description": "A programmable Bitcoin inheritance vault using Charms Protocol, ensuring your digital assets reach your loved ones.",
@@ -45,33 +44,52 @@ const Homepage: FC = () => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div className="min-h-screen bg-gradient-to-b from-[#0B0B10] via-[#0d0d18] to-black text-white overflow-hidden relative">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-24 -left-16 h-72 w-72 rounded-full bg-[#8B7CFF]/20 blur-3xl" />
-          <div className="absolute top-10 right-0 h-80 w-80 rounded-full bg-[#FF4D6D]/15 blur-3xl" />
-          <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-[#E6E1FF]/12 blur-3xl" />
-        </div>
-        <div className="relative min-h-screen flex flex-col">
-          <Particles
-            className="absolute inset-0 pointer-events-none"
-            quantity={300}
-            staticity={30}
-            ease={50}
-            color="#ffffff"
+      <div className="min-h-screen bg-background relative overflow-hidden">
+        {/* Floating Header */}
+        <Header />
+
+        {/* Main Content */}
+        <div className="pb-16">
+          {/* Hero Section */}
+          <Hero
+            title="Secure Bitcoin Inheritance for Modern Families"
+            subtitle="Modern, trust-driven inheritance rails on Bitcoin. Automate check-ins, lock assets with confidence, and keep beneficiaries informed powered by Charms Protocol."
+            eyebrow="Next-Gen Bitcoin Inheritance"
+            ctaLabel="Launch Heritaz"
           />
-          <div className="relative z-10 text-center space-y-16 p-8 max-w-6xl mx-auto">
-            <Hero />
-            <FeatureSection />
-            <HowItWorks />
-            <FAQ />
-            
-            {/* Trust Indicators */}
-            <div className="pt-16 border-t border-zinc-900">
-              <div className="flex flex-wrap justify-center text-zinc-500 text-sm">
-                <a href="https://twitter.com/zanbuilds" className="hover:underline">@zanbuilds</a>
+
+          {/* How It Works Section */}
+          <HowItWorks />
+
+          {/* Features Section */}
+          <Features />
+
+          {/* Footer */}
+          <footer className="!bg-black mt-20 pt-16 border-t border-white/10" style={{backgroundColor: '#000000 !important'}}>
+            <div className="max-w-6xl mx-auto px-6 py-12">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-gradient-to-r from-[#F7931A] to-orange-500 rounded-full flex items-center justify-center">
+                    <span className="text-black font-bold text-sm">₿</span>
+                  </div>
+                  <span className="text-xl font-bold text-white">Heritaz</span>
+                </div>
+                <p className="text-gray-400 text-sm mb-6">
+                  Secure Bitcoin inheritance for the digital age
+                </p>
+                <div className="flex justify-center space-x-6 text-sm">
+                  <a href="https://twitter.com/zanbuilds" className="text-gray-400 hover:text-[#F7931A] transition-colors duration-300">
+                    @zanbuilds
+                  </a>
+                </div>
+                <div className="mt-8 pt-8 border-t border-white/10">
+                  <p className="text-xs text-gray-500">
+                    © 2024 Heritaz. Powered by Charms Protocol. Your keys, your Bitcoin, your legacy.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </footer>
         </div>
       </div>
     </>

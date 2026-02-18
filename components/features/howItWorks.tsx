@@ -108,20 +108,6 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Bottom Protocol Badge */}
-        <div className="mt-16 flex justify-center">
-          <div className="bg-gradient-to-r from-gray-900/80 to-gray-800/50 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-4">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-[#F7931A] to-orange-500 rounded-full flex items-center justify-center">
-                <Shield className="w-6 h-6 text-black" />
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white">Powered by Charms Protocol</p>
-                <p className="text-xs text-gray-400">Your keys, your Bitcoin, your legacy</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )

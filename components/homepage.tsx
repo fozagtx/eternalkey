@@ -84,7 +84,7 @@ const Homepage: FC = () => {
                 </div>
                 <div className="mt-8 pt-8 border-t border-white/10">
                   <p className="text-xs text-gray-500">
-                    © 2024 Heritaz. Powered by Charms Protocol. Your keys, your Bitcoin, your legacy.
+                    © 2024 Heritaz.
                   </p>
                 </div>
               </div>
